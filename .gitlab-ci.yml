@@ -1,0 +1,25 @@
+image:
+  name: andymeneely/swen331fuzzer # don't change this
+  entrypoint: [""]  # don't change this
+before_script:
+  # don't change these either
+  - chown -R mysql:mysql /var/lib/mysql /var/run/mysqld
+  - echo '[+] Starting mysql...'
+  - service mysql start
+  - echo '[+] Starting apache'
+  - service apache2 start
+fuzzrunner:
+  script:
+    - pip3 install requests
+    - pip3 install argparse
+    - pip3 install setuptools
+    - pip3 install lxml
+    - pip3 install bs4
+    # here is where you can write your commands to run your fuzzer or any custom setup commands
+    # An example fuzzer command. Note the url is DIFFERENT than XAMPP example (no /dvwa).
+    # Remove whatever you need to.
+    - python3 fuzz.py discover http://127.0.0.1 --custom-auth=dvwa --common-words=dvwa_words.txt
+    - python3 fuzz.py discover http://127.0.0.1/fuzzer-tests --common-words=words.txt
+    - python3 fuzz.py test http://127.0.0.1/fuzzer-tests --common-words=words.txt --vectors=vectors.txt --sanitized-chars=badchars.txt --sensitive=sensitive.txt
+    - python3 fuzz.py test http://127.0.0.1 --custom-auth=dvwa --common-words=dvwa_words.txt --vectors=vectors.txt --sanitized-chars=badchars.txt --sensitive=sensitive.txt
+  stage: test

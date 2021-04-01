@@ -1,0 +1,5 @@
+index.php
+setup.php
+security.php
+bar
+baz

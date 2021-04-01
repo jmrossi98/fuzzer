@@ -1,0 +1,7 @@
+{
+	"xampp_path" : "C:\\xampp\\xampp-portable",
+	"dvwa" : {
+		"username" : "admin",
+		"password" : "password"
+	}
+}
